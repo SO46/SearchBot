@@ -1,11 +1,11 @@
-package main.dao;
+package main.util;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
-public class HibernateSessionFactory {
+public class HibernateUtil {
 
     private static SessionFactory sessionFactory;
 
@@ -20,9 +20,5 @@ public class HibernateSessionFactory {
             }
         }
         return sessionFactory;
-    }
-
-    public static void closeSession(){
-        getSessionFactory().close();
     }
 }
