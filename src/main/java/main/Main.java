@@ -1,13 +1,14 @@
 package main;
 
 import lombok.SneakyThrows;
-import main.parser.Parser;
+import main.search.Search;
 import main.util.HibernateUtil;
+import org.apache.lucene.morphology.LuceneMorphology;
+import org.apache.lucene.morphology.russian.RussianLuceneMorphology;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.concurrent.ForkJoinPool;
 
 public class Main {
 
@@ -17,10 +18,16 @@ public class Main {
     public static void main(String[] args) {
 
         long start = System.currentTimeMillis();
-        List<String> links = readFile(FILE_SRC);
-        for (String link: links) {
-            new ForkJoinPool().invoke(new Parser(link));
-        }
+//        HibernateUtil.getSessionFactory().close();
+//        List<String> links = readFile(FILE_SRC);
+//        for (String link: links) {
+//            new ForkJoinPool().invoke(new Parser(link));
+//        }
+
+
+        String request = "чехлы, защитные пленки";
+
+        Search.find(request);
 
         HibernateUtil.getSessionFactory().close();
 

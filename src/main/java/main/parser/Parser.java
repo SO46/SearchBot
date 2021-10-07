@@ -28,16 +28,16 @@ import java.util.concurrent.RecursiveAction;
 @Data
 public class Parser extends RecursiveAction {
 
-    private static volatile Logger LOGGER = LoggerFactory.getLogger(Parser.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Parser.class);
 
     private static final Marker INFO_HISTORY_MARKER = MarkerFactory.getMarker("INFO_HISTORY");
 
     private static volatile Set<String> filter = new HashSet<>();
 
-    private PageDaoImpl pageDaoImpl = new PageDaoImpl();
-    private FieldDaoImpl fieldDaoImpl = new FieldDaoImpl();
-    private LemmaDaoImpl lemmaDaoImpl = new LemmaDaoImpl();
-    private IndexDaoImpl indexDaoImpl = new IndexDaoImpl();
+    private static volatile PageDaoImpl pageDaoImpl = new PageDaoImpl();
+    private static volatile FieldDaoImpl fieldDaoImpl = new FieldDaoImpl();
+    private static volatile LemmaDaoImpl lemmaDaoImpl = new LemmaDaoImpl();
+    private static volatile IndexDaoImpl indexDaoImpl = new IndexDaoImpl();
 
     private final static int MIN_TIME = 150;
     private final static int MAX_TIME = 500;
@@ -48,12 +48,12 @@ public class Parser extends RecursiveAction {
 
     public Parser(String link) {
         this.link = link;
+        filter.add(link);
     }
 
     @SneakyThrows
     @Override
     protected void compute() {
-        String threadName = Thread.currentThread().getName();
         LOGGER.info(INFO_HISTORY_MARKER, "поток создан " + link);
         List<String> links = parse(link);
         for (String nestedLink: links) {
@@ -122,7 +122,7 @@ public class Parser extends RecursiveAction {
             if (map == null){
                 continue;
             }
-            float rank = 0;
+            float rank;
             if (i < fieldsMap.size() - 1){
                 Field secondField = fields.get(i+1);
                 String secondName = secondField.getName();
@@ -151,10 +151,8 @@ public class Parser extends RecursiveAction {
 
     private void indexingLemmas(String word, Integer freq, Page page, float rank){
 
-        List<Lemma> lemmas = lemmaDaoImpl.findByLemma(word);
-        Lemma lemma;
-        if (!lemmas.isEmpty()) {
-            lemma = lemmas.get(0);
+        Lemma lemma = lemmaDaoImpl.findByLemma(word);
+        if (lemma!=null) {
             lemma.setFrequency(lemma.getFrequency() + freq);
             lemmaDaoImpl.update(lemma);
         } else {
@@ -167,7 +165,7 @@ public class Parser extends RecursiveAction {
         Index index = new Index();
         index.setPage(page);
         index.setLemma(lemma);
-        index.setLemmaRank(rank);
+        index.setRank(rank);
 
         indexDaoImpl.add(index);
     }

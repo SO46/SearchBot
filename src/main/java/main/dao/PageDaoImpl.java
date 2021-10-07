@@ -44,4 +44,12 @@ public class PageDaoImpl extends SessionUtil implements PageDao {
         session.remove(page);
         closeTransactionSession();
     }
+
+    @Override
+    public long countPages() {
+        Session session = openTransactionSession();
+        long count = (long) session.createQuery("select count(*) from Page").getSingleResult();
+        closeTransactionSession();
+        return  count;
+    }
 }

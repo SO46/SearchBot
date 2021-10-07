@@ -17,12 +17,15 @@ public class SessionUtil {
     }
 
     public Session openSession() {
-        return HibernateUtil.getSessionFactory().openSession();
+        return HibernateUtil.getSessionFactory().getCurrentSession();
     }
 
     public Session openTransactionSession() {
         session = openSession();
-        transaction = session.beginTransaction();
+        transaction = session.getTransaction();
+        if (!transaction.isActive()){
+            transaction.begin();
+        }
         return session;
     }
 

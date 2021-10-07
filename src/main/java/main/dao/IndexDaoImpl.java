@@ -24,6 +24,14 @@ public class IndexDaoImpl extends SessionUtil implements IndexDao {
     }
 
     @Override
+    public List<Index> findByLemma(int id) {
+        Session session = openTransactionSession();
+        List<Index> indexes = session.createQuery("from Index WHERE lemma=" + id).list();
+        closeTransactionSession();
+        return indexes;
+    }
+
+    @Override
     public void update(Index index) {
         Session session = openTransactionSession();
         session.update(index);

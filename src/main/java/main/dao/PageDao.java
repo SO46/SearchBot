@@ -11,4 +11,5 @@ public interface PageDao {
     Page findById(int id);
     void update(Page page);
     void delete(Page page);
+    long countPages();
 }

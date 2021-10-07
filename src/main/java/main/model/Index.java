@@ -1,8 +1,10 @@
 package main.model;
 
 import lombok.Data;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Data
 @Entity
@@ -22,5 +24,5 @@ public class Index {
     private Lemma lemma;
 
     @Column(name = "lemma_rank")
-    private float lemmaRank;
+    private float rank;
 }
