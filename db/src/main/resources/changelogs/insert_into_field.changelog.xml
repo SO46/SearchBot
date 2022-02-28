@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+    <changeSet id="1" author="stepan">
+        <insert tableName="field">
+            <column name="id">1</column>
+            <column name="name">title</column>
+            <column name="selector">title</column>
+            <column name="weight">1.0</column>
+        </insert>
+        <insert tableName="field">
+            <column name="id">2</column>
+            <column name="name">body</column>
+            <column name="selector">body</column>
+            <column name="weight">0.8</column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

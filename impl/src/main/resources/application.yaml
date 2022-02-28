@@ -1,0 +1,22 @@
+server:
+  port: 8086
+spring:
+  datasource:
+#    url: jdbc:mysql://localhost:3306/search_engine
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:5432/search_engine?currentSchema=search_engine
+    driver-class-name: org.postgresql.Driver
+    username: myuser
+    password: mysecretpassword
+  liquibase:
+    enabled: true
+    change-log: classpath:changelog-master.xml
+    default-schema: search_engine
+    drop-first: ${DROP-FIRST:false}
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: none
+#sites:
+#  list:
+#    - url: http://www.playback.ru
+#      name: playback.ru

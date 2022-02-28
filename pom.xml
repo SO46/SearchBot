@@ -4,45 +4,111 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.example</groupId>
-    <artifactId>diplom</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>ru.skillbox.diplom</groupId>
+    <artifactId>searchengine</artifactId>
+    <version>${revision}${sha1}${changelist}</version>
+    <packaging>pom</packaging>
+    <name>Afanasev :: SearchEngine</name>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.5.5</version>
+        <relativePath/>
+    </parent>
 
     <properties>
-        <maven.compiler.source>15</maven.compiler.source>
-        <maven.compiler.target>15</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <revision>1.0.0</revision>
+        <sha1/>
+        <changelist>-SNAPSHOT</changelist>
+        <sha1/>
         <lo4j.version>2.13.3</lo4j.version>
+        <org.jsoup.version>1.14.3</org.jsoup.version>
+        <org.springframework.version>5.3.10</org.springframework.version>
+        <org.apache.maven.version>3.8.3</org.apache.maven.version>
+        <spring-boot-starter-data-jdbc.version>2.5.5</spring-boot-starter-data-jdbc.version>
+        <spring-boot-starter-data-jpa.version>2.5.5</spring-boot-starter-data-jpa.version>
+        <spring-boot-starter-security.version>2.5.5</spring-boot-starter-security.version>
+        <spring-boot-starter-test.version>2.5.5</spring-boot-starter-test.version>
+        <spring-boot-starter-actuator>2.5.5</spring-boot-starter-actuator>
+        <spring-security-test.version>5.5.2</spring-security-test.version>
+        <org.postgressql.version>42.2.24</org.postgressql.version>
+        <org.projectlombok.version>1.18.22</org.projectlombok.version>
+        <micrometer-registry-prometheus>1.8.0</micrometer-registry-prometheus>
+        <spring-boot-starter-web.version>2.5.5</spring-boot-starter-web.version>
+        <spring-boot-starter-log4j2.version>2.5.5</spring-boot-starter-log4j2.version>
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <spring-boot-maven-plugin.version>2.5.5</spring-boot-maven-plugin.version>
+        <spring-boot-starter-mail.version>2.5.5</spring-boot-starter-mail.version>
+        <spring-boot-starter-aop>2.5.5</spring-boot-starter-aop>
+        <java.version>11</java.version>
     </properties>
 
+    <modules>
+        <module>api</module>
+        <module>domain</module>
+        <module>impl</module>
+        <module>db</module>
+        <module>domain</module>
+    </modules>
+
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
         <dependency>
-            <groupId>org.jsoup</groupId>
-            <artifactId>jsoup</artifactId>
-            <version>1.13.1</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.20</version>
-            <scope>provided</scope>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>5.5.7.Final</version>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${org.springframework.version}</version>
         </dependency>
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.23</version>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-plugin-api</artifactId>
+            <version>${org.apache.maven.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jdbc</artifactId>
+            <version>${spring-boot-starter-data-jdbc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <version>${spring-boot-starter-data-jpa.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>${spring-boot-starter-web.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+            <version>${spring-boot-starter-aop}</version>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>mysql</groupId>-->
+<!--            <artifactId>mysql-connector-java</artifactId>-->
+<!--            <version>8.0.23</version>-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${org.postgressql.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
             <version>${lo4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${org.projectlombok.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
@@ -54,6 +120,20 @@
             <artifactId>log4j-slf4j-impl</artifactId>
             <version>${lo4j.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>${org.jsoup.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>${maven-compiler-plugin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <version>${spring-boot-maven-plugin.version}</version>
+        </dependency>
     </dependencies>
-
 </project>
